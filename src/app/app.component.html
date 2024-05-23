@@ -1,0 +1,155 @@
+<p-card header="4K SİTE YÖNETİMİ'NE DUYURU!!">
+  <p class="m-0">
+    Ne yaparsak yapalım maalesef 30 Ocak 2024 tarihinden beri hiç bir işlem
+    yaptıramıyoruz.
+  </p>
+  <p-divider />
+  <p class="m-0">
+    Apartman lağım kokusu içerisinde, oluşacabilecek bütün hastalıklardan
+    <strong>SİTE YÖNETİMİ SORUMLUDUR!</strong>
+  </p>
+  <p-divider />
+  <p class="m-0">Bu durumda <strong>AİDAT ÖDEMEYİ REDDEDİYORUZ..</strong></p>
+  <p-divider />
+  <p class="m-0">
+    Aşağıda bulunan 3 adet sekmeye ayrı ayrı tıklayarak mesajlaşma, video ve fotoğraflara
+    ulaşabilirsiniz.
+  </p>
+</p-card>
+<p-accordion>
+  <p-accordionTab header="1- Site Yönetimi İle Mesajlaşmalar İçin Tıklayınız">
+    <h3> <p-divider /><strong><span style="color: red;">Fotoğraflara tıklayarak yazışmaları okuyabilirsiniz.</span></strong></h3>
+    <p-divider />
+    <p-stepper>
+      <ng-container *ngFor="let event of events; let i = index">
+        <p-stepperPanel [header]="event.status">
+          <ng-template
+            pTemplate="content"
+            let-prevCallback="prevCallback"
+            let-nextCallback="nextCallback"
+            let-index="index"
+          >
+            <div
+              class="flex flex-column"
+              style="height: auto; min-height: 20rem"
+            >
+              <div
+                class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium"
+                style="width: 100%"
+              >
+                <p-card
+                  [header]="event.status"
+                  [subheader]="event.date"
+                  class="responsive-card"
+                >
+                  <ng-template pTemplate="header">
+                    <p-image
+                      *ngIf="event.image"
+                      [src]="event.image"
+                      [alt]="event.date"
+                      [previewImageSrc]="event.image"
+                      width="100%"
+                      [preview]="true"
+                    />
+                  </ng-template>
+                  <p>{{ event.aciklama }}</p>
+                </p-card>
+              </div>
+            </div>
+
+            <div
+              class="flex pt-4"
+              [ngClass]="{
+                'justify-content-between': i > 0 && i < events.length - 1,
+                'justify-content-end': i === 0,
+                'justify-content-start': i === events.length - 1
+              }"
+            >
+              <p-button
+                *ngIf="i > 0"
+                label="Önceki Yazışma"
+                icon="pi pi-arrow-left"
+                (onClick)="prevCallback.emit()"
+              />
+              <p-button
+                *ngIf="i < events.length - 1"
+                label="Sonraki Yazışma"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                (onClick)="nextCallback.emit()"
+              />
+            </div>
+          </ng-template>
+        </p-stepperPanel>
+      </ng-container>
+    </p-stepper>
+  </p-accordionTab>
+  <p-accordionTab header="2- LAĞIM KOKULU VİDEOLARIMIZ İÇİN TIKLAYINIZ...">
+    <div class="py-2">
+      <p-button
+        type="button"
+        icon="pi pi-minus"
+        (click)="prevV()"
+        severity="secondary"
+        styleClass="mr-2"
+      />
+      <p-button type="button" icon="pi pi-plus" (click)="nextV()" />
+    </div>
+    <p-galleria
+      [value]="videos"
+      [responsiveOptions]="responsiveOptionss"
+      [containerStyle]="{ 'max-width': '640px' }"
+      [numVisible]="5"
+      [(activeIndex)]="activeIndexVideo"
+      autoPlay="false"
+    >
+      <ng-template pTemplate="item" let-item>
+        <iframe
+          width="640"
+          height="400"
+          [src]="item.itemImageSrc | safe : 'resourceUrl'"
+        >
+        </iframe>
+      </ng-template>
+      <ng-template pTemplate="thumbnail" let-item>
+        <div class="grid grid-nogutter justify-content-center">
+          <img
+            [src]="item.thumbnailImageSrc"
+            style="width: 50px; height: 50px"
+          />
+        </div>
+      </ng-template>
+    </p-galleria>
+  </p-accordionTab>
+  <p-accordionTab header="3- Foto Galeri İçin Tıklayınız">
+    <div class="py-2">
+      <p-button
+        type="button"
+        icon="pi pi-minus"
+        (click)="prev()"
+        severity="secondary"
+        styleClass="mr-2"
+      />
+      <p-button type="button" icon="pi pi-plus" (click)="next()" />
+    </div>
+    <p-galleria
+      [value]="images"
+      [responsiveOptions]="responsiveOptions"
+      [containerStyle]="{ 'max-width': '640px' }"
+      [numVisible]="5"
+      [(activeIndex)]="activeIndex"
+    >
+      <ng-template pTemplate="item" let-item>
+        <img [src]="item.itemImageSrc" style="width: 640px; height: 640px" />
+      </ng-template>
+      <ng-template pTemplate="thumbnail" let-item>
+        <div class="grid grid-nogutter justify-content-center">
+          <img
+            [src]="item.thumbnailImageSrc"
+            style="width: 50px; height: 50px"
+          />
+        </div>
+      </ng-template>
+    </p-galleria>
+  </p-accordionTab>
+</p-accordion>

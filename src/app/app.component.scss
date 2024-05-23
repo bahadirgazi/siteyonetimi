@@ -1,0 +1,21 @@
+.responsive-card {
+  width: 100%;
+  height: auto;
+}
+
+/* Telefon modunda (max-width: 767px) */
+@media (max-width: 767px) {
+  .responsive-card {
+    max-width: 450px;
+    max-height: 450px;
+  }
+}
+
+/* Web sayfasında (min-width: 768px) */
+@media (min-width: 768px) {
+  .responsive-card {
+    width: 400px;
+    max-height: 510px;
+    min-height: 510px;
+  }
+}
